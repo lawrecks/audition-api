@@ -1,0 +1,8 @@
+/build/**
+/coverage/**
+/tests/**
+/tmp/**
+/tools/internal-rules/node_modules/**
+.eslintrc.js
+/dist
+/config
