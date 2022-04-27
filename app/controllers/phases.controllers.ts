@@ -20,3 +20,13 @@ export const getPhase = (req: Request, res: Response, next: NextFunction) => {
     return next(error);
   }
 };
+
+export const createPhase = (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const { name } = req.body;
+    const data = service.createPhase(name);
+    return successResponse(res, 'Phase created successfully', 201, data);
+  } catch (error) {
+    return next(error);
+  }
+};
