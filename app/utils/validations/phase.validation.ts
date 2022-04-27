@@ -8,3 +8,10 @@ export const phaseParams = (req: Request, res: Response, next: NextFunction): vo
   });
   baseValidator(schema, req, res, next, 'params');
 };
+
+export const createPhase = (req: Request, res: Response, next: NextFunction): void => {
+  const schema = Joi.object({
+    name: Joi.string().required(),
+  });
+  baseValidator(schema, req, res, next, 'body');
+};

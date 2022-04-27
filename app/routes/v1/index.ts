@@ -12,8 +12,10 @@ router.get('/', (req: Request, res: Response) => {
   });
 });
 
-router.get('/phases', phaseController.getPhases);
+router.get('/phase', phaseController.getPhases);
 
-router.get('/phases/:phaseId', phaseValidator.phaseParams, phaseController.getPhase);
+router.get('/phase/:phaseId', phaseValidator.phaseParams, phaseController.getPhase);
+
+router.post('/phase', phaseValidator.createPhase, phaseController.createPhase);
 
 export default router;
