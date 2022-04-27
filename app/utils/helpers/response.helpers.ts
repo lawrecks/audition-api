@@ -4,7 +4,6 @@ export const Error = (message: string, code: number) => ({
   status: 'error',
   message,
   code,
-  data: null,
 });
 
 export const successResponse = (
