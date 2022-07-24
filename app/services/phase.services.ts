@@ -26,4 +26,70 @@ export const createPhase = (phaseName: string) => {
 
   phasesData.push(newPhase);
   return newPhase;
-}
+};
+
+export const addTaskToPhase = (taskName: string, phaseId: number) => {
+  const phase = getPhase(phaseId);
+  if (phase.isDone === true) {
+    throw Error('No further task can be added to a completed phase', 400);
+  }
+  phase.tasks.push({
+    taskId: phase.tasks.length + 1,
+    taskName,
+    isComplete: false,
+  });
+  return phase;
+};
+
+export const getPhaseTask = (taskId: number, phaseId: number) => {
+  const phase = getPhase(phaseId);
+  const task = phase.tasks.find((el) => el.taskId === Number(taskId));
+  if (!task) {
+    throw Error('Task not found', 404);
+  }
+  return task;
+};
+
+const getPhaseIndex = (phase: IPhase) =>
+  phasesData.findIndex((el) => el.phaseId === phase.phaseId);
+
+const getPreviousPhase = (phase: IPhase) => {
+  const phaseIndex = getPhaseIndex(phase);
+  return phasesData[phaseIndex - 1];
+};
+
+const getNextPhase = (phase: IPhase) => {
+  const phaseIndex = getPhaseIndex(phase);
+  return phasesData[phaseIndex + 1];
+};
+
+const checkStatusOfPreviousPhase = (phase: IPhase) => {
+  if (phase && !phase.isDone === true) {
+    throw Error('Previous phase must be completed to unlock this phase', 400);
+  }
+};
+
+export const updateTaskStatus = (phaseId: number, taskId: number) => {
+  const phase = getPhase(phaseId);
+
+  if (phase.isDone === true) {
+    throw Error('Phase is completed an cannot be updated', 400);
+  }
+
+  const task = getPhaseTask(phase.phaseId, taskId);
+  if (task.isComplete === true) {
+    throw Error('Task is already completed', 400);
+  }
+
+  const previousPhase = getPreviousPhase(phase);
+  const nextPhase = getNextPhase(phase);
+  checkStatusOfPreviousPhase(previousPhase);
+  task.isComplete = true;
+
+  // if all tasks in current phase are completed, unlock next phase 
+  phase.isDone = phase.tasks.every((el) => el.isComplete === true);
+  if (nextPhase && phase.isDone) {
+    nextPhase.status = PhaseStatus.UNLOCKED;
+  }
+  return task;
+};

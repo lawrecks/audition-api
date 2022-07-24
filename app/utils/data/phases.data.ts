@@ -1,6 +1,7 @@
 import PhaseStatus from "../../enums/phase.enums";
+import { IPhase } from "../../interfaces/phase.interface";
 
-export default [
+const phasesData: IPhase[] = [
   {
     phaseId: 1,
     phaseName: 'foundation',
@@ -66,3 +67,5 @@ export default [
     ],
   },
 ]
+
+export default phasesData;
