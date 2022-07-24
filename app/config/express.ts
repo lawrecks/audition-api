@@ -33,7 +33,8 @@ const expressConfig = (app: Express) => {
   // catch 404 and forward to error handler
   app.use((req: Request, res: Response, next: NextFunction) => {
     const err: any = new Error('Route Not Found');
-    err.status = 404;
+    err.status = 'error';
+    err.code = 404;
     return next(err);
   });
   // error handlers
