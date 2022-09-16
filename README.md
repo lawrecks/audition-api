@@ -80,4 +80,4 @@ Give a ⭐️ if you like this project!
 
 ## Copyright
 
-Copyright (c) 2021 Ugochukwu Ejiogu
+Copyright (c) 2022 Ugochukwu Ejiogu
